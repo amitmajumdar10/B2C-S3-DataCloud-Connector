@@ -1,0 +1,126 @@
+{
+    "step-types":
+    {
+      "script-module-step":
+      [
+        {
+            "@type-id": "custom.s3upload",
+            "@supports-parallel-execution": "true",
+            "@supports-site-context": "false",
+            "@supports-organization-context": "true",
+            "description": "Upload file in a S3 bucket",
+            "module": "plugin_s3_connector/cartridge/scripts/jobstep/s3Transfer.js",
+            "function": "Upload",
+            "transactional": "false",
+            "timeout-in-seconds": "1000",
+            "parameters": {
+                "parameter": [
+                    {
+                        "@name": "s3ConfigObject",
+                        "@type": "string",
+                        "@required": "true",
+                        "description": "S3 bucket information required for file transfer. The value here should be the primary key of instance of custom object type 's3_upload_config'"
+                    }
+                ]
+            },
+            "status-codes": {
+                "status": [{
+                        "@code": "ERROR",
+                        "description": "Used when the step failed with an error."
+                    },
+                    {
+                        "@code": "FINISHED",
+                        "description": "Used when the step finished successfully."
+                    },
+                    {
+                        "@code": "FINISHED_WITH_WARNINGS",
+                        "description": "Used when the step finished with warnings."
+                    }
+                ]
+            }
+        },
+        {
+            "@type-id": "custom.s3download",
+            "@supports-parallel-execution": "true",
+            "@supports-site-context": "false",
+            "@supports-organization-context": "true",
+            "description": "Download file from a S3 bucket",
+            "module": "plugin_s3_connector/cartridge/scripts/jobstep/s3Transfer.js",
+            "function": "Download",
+            "transactional": "false",
+            "timeout-in-seconds": "1000",
+            "parameters": {
+                "parameter": [
+                    {
+                        "@name": "s3ConfigObject",
+                        "@type": "string",
+                        "@required": "true",
+                        "description": "S3 bucket information required for file transfer. The value here should be the primary key of instance of custom object type 's3_download_config'"
+                    }
+                ]
+            },
+            "status-codes": {
+                "status": [{
+                        "@code": "ERROR",
+                        "description": "Used when the step failed with an error."
+                    },
+                    {
+                        "@code": "FINISHED",
+                        "description": "Used when the step finished successfully."
+                    },
+                    {
+                        "@code": "FINISHED_WITH_WARNINGS",
+                        "description": "Used when the step finished with warnings."
+                    }
+                ]
+            }
+        },
+        {
+            "@type-id": "custom.CreateOrderHeadersCSV",
+            "module": "plugin_s3_connector/cartridge/scripts/jobstep/createOrderHeadersCSV.js",
+            "function": "CreateOrderHeadersCSV",
+            "@supports-parallel-execution":"true",
+            "@supports-site-context": "true",
+            "@supports-organization-context":"false",
+            "transactional": "false",
+            "timeout-in-seconds": "1000",
+            "description": "Create a CSV file for the orders to be exported to the S3 bucket.",
+            "parameters": {
+                "parameter": [
+                    {
+                        "@name": "orderFromDays",
+                        "@type": "string",
+                        "@required": "true",
+                        "description": "Orders to Pick from how many days",
+                        "default-value": 1
+                    },
+                    {
+                        "@name": "WorkingFolder",
+                        "@type": "string",
+                        "@required": "true",
+                        "@trim": "true",
+                        "description": "Working folder path relative to IMPEX",
+                        "default-value": "src/upload/OrderExportForS3"
+                    }
+                ]
+            },
+            "status-codes": {
+                "status": [
+                    {
+                        "@code": "ERROR",
+                        "description": "Used when the step failed with an error."
+                    },
+                    {
+                        "@code": "OK",
+                        "description": "Used when the step finished successfully."
+                    },
+                    {
+                        "@code": "FINISHED_WITH_WARNINGS",
+                        "description": "Used when the step finished with warnings."
+                    }
+                ]
+            }
+        }
+      ]
+    }
+}
