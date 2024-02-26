@@ -8,6 +8,8 @@ const File = require('dw/io/File');
 const FileWriter = require('dw/io/FileWriter');
 const CSVStreamWriter = require('dw/io/CSVStreamWriter');
 const CustomerMgr = require('dw/customer/CustomerMgr');
+const StringUtils = require('dw/util/StringUtils');
+const Calendar = require('dw/util/Calendar');
 const { createDirectory } = require('bc_job_components/cartridge/scripts/file/FileHelper');
 
 // eslint-disable-next-line require-jsdoc
@@ -26,7 +28,7 @@ function writeHeaderToCSV(csvfileWriter) {
     if (empty(csvfileWriter)) {
         return;
     }
-    let headers = ['Order Number', 'Order Date', 'Customer Number', 'Customer Name', 'Customer Type', 'Customer email', 'Customer Mobile', 'Total Amount'];
+    let headers = ['Order Number', 'Order Date', 'Customer Number', 'Customer Name', 'Customer Type', 'Customer email', 'Customer Mobile', 'Customer List Id', 'Total Amount'];
     csvfileWriter.writeNext(headers);
 }
 
@@ -42,7 +44,7 @@ function writeOrderToCSV(csvfileWriter, order) {
     }
     let orderLine = [];
     orderLine.push(order.orderNo);
-    orderLine.push(order.getCreationDate());
+    orderLine.push(StringUtils.formatCalendar(new Calendar(order.getCreationDate()), 'yyyy-MM-dd'));
     orderLine.push(order.customerNo);
     orderLine.push(order.customerName);
     let mobileNumber;
@@ -54,6 +56,7 @@ function writeOrderToCSV(csvfileWriter, order) {
     orderLine.push(CustomerMgr.getCustomerByLogin(mobileNumber) ? 'Registered' : 'Anonymous');
     orderLine.push(order.customerEmail);
     orderLine.push(mobileNumber);
+    orderLine.push(CustomerMgr.siteCustomerList.ID);
     orderLine.push(order.adjustedMerchandizeTotalGrossPrice.value);
     csvfileWriter.writeNext(orderLine);
 }
