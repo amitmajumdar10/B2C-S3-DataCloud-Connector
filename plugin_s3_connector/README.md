@@ -1,8 +1,9 @@
 # B2C-S3-DataCloud Connector
+B2C-S3-DataCloud Connector
 
 ### Description
 
-The puspose of the B2C-S3-DataCloud Connector is to enable the connection with AWS S3 buckets and allow downloading and uploading file and directories. The connector is using a S3 bucket as a transfer server for data ingestion in DC from B2C and also for activation of segments in B2C. It is expected that you create and configure a S3 bucket with proper access to allow seemless functioning of the connector.
+The purpose of the B2C-S3-DataCloud Connector is to enable the connection with AWS S3 buckets and allow the downloading and uploading of files and directories. The connector uses an S3 bucket as a transfer server for data ingestion in DC from B2C and also for activation of segments in B2C. It is expected that you create and configure an S3 bucket with proper access to allow seamless functioning of the connector.
 
 
 ### Features
