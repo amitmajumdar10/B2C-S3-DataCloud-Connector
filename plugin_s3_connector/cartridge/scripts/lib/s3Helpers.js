@@ -405,7 +405,7 @@ function execute(httpMethod, fullPath, outGoingFile, incomingFile) {
     try {
         response = s3Service.getS3Service().call(payload);
     } catch (error) {
-        logger.error('Exception occured when connecting to S3 - {0}' + error);
+        logger.error('Exception occured when connecting to S3 - {0}', error);
     }
     return response;
 }
@@ -425,7 +425,7 @@ S3TransferClient.prototype.getBinary = function (fullFileName, localFile) {
         return false;
     }
 
-    if (response.object && response.object.statusCode === 200) {
+    if (response.object && 'statusCode' in response.object && response.object.statusCode === 200) {
         return true;
     }
 
@@ -448,7 +448,7 @@ S3TransferClient.prototype.putBinary = function (fullFileName, localFile) {
         return false;
     }
 
-    if (response.object && response.object.statusCode === 200) {
+    if (response.object && 'statusCode' in response.object && response.object.statusCode === 200) {
         return true;
     }
     logger.error('S3TransferClient.ds: Unable to upload [{0}]. An error occurred with status code [{1}] and error text [{2}]', fullFileName, response.statusCode, response.errorText);
@@ -469,7 +469,7 @@ S3TransferClient.prototype.del = function (fullFileName) {
         return false;
     }
 
-    if (response.object && response.object.statusCode === 200) {
+    if (response.object && 'statusCode' in response.object && response.object.statusCode === 200) {
         return true;
     }
     logger.error('S3TransferClient.ds: Unable to delete [{0}]. An error occurred with status code [{1}] and error text [{2}]', fullFileName, response.statusCode, response.errorText);

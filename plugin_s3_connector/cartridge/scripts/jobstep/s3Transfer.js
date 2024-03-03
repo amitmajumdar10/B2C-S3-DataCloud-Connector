@@ -1,7 +1,7 @@
 'use strict';
 
 const Status = require('dw/system/Status');
-const Logger = require('dw/system/Logger');
+const Logger = require('dw/system/Logger').getLogger('s3tc', 'S3TransferClient');
 const File = require('dw/io/File');
 const CustomObjectMgr = require('dw/object/CustomObjectMgr');
 
@@ -64,7 +64,10 @@ var download = function (params) {
         return new Status(Status.ERROR, 'FINISHED', 'Job s3Transfer - File Download finished with Error | S3 configuration object is missing in BM');
     }
 
-    var fileDir = new File(File.IMPEX + '/src/order/');
+    var localFilePath = initObj.localFilePath.split('/');
+    localFilePath.pop();
+    localFilePath = localFilePath.join('/');
+    var fileDir = new File(File.IMPEX + localFilePath);
     if (!fileDir.exists()) { fileDir.mkdirs(); }
 
     var fileToDownload = new File(File.IMPEX + File.SEPARATOR + initObj.localFilePath);

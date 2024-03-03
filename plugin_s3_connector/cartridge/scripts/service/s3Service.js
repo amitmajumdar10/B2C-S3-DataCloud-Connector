@@ -41,7 +41,7 @@ function getS3Service() {
                 }
                 return httpClient;
             } catch (error) {
-                logger.error('Exception occured when connecting to S3 - {0}' + error);
+                logger.error('Exception occured when connecting to S3 - {0}', error);
             }
             return {
                 error: true

@@ -28,7 +28,7 @@ function writeHeaderToCSV(csvfileWriter) {
     if (empty(csvfileWriter)) {
         return;
     }
-    let headers = ['Order Number', 'Order Date', 'Customer Number', 'Customer Name', 'Customer Type', 'Customer email', 'Customer Mobile', 'Customer List Id', 'Total Amount'];
+    let headers = ['Order Number', 'Order Date', 'Customer Number', 'Customer First Name', 'Customer Last Name', 'Customer Type', 'Customer email', 'Customer Mobile', 'Customer Birthday', 'Customer List Id', 'Total Amount'];
     csvfileWriter.writeNext(headers);
 }
 
@@ -46,17 +46,37 @@ function writeOrderToCSV(csvfileWriter, order) {
     orderLine.push(order.orderNo);
     orderLine.push(StringUtils.formatCalendar(new Calendar(order.getCreationDate()), 'yyyy-MM-dd'));
     orderLine.push(order.customerNo);
-    orderLine.push(order.customerName);
-    let mobileNumber;
+
+    let mobileNumber = '';
+    let birthday = '';
+    var siteCustomerListID = '';
     if (!empty(order.customer)) {
         var customer = order.customer;
         var profile = customer.profile;
-        mobileNumber = (profile ? profile.phoneMobile : order.custom.mobileNumber) || '';
+        if (profile) {
+            mobileNumber = profile.phoneMobile;
+            orderLine.push(profile.firstName);
+            orderLine.push(profile.lastName);
+            if (profile.birthday) {
+                birthday = StringUtils.formatCalendar(new Calendar(profile.birthday), 'yyyy-MM-dd');
+            }
+            siteCustomerListID = CustomerMgr.siteCustomerList.ID;
+        } else {
+            mobileNumber = order.custom.mobileNumber || '';
+            var name = order.customerName;
+            var arrname = name.split(' ');
+            var lName = arrname[arrname.length - 1];
+            arrname.pop();
+            var fName = arrname.join(' ');
+            orderLine.push(fName);
+            orderLine.push(lName);
+        }
     }
     orderLine.push(CustomerMgr.getCustomerByLogin(mobileNumber) ? 'Registered' : 'Anonymous');
     orderLine.push(order.customerEmail);
     orderLine.push(mobileNumber);
-    orderLine.push(CustomerMgr.siteCustomerList.ID);
+    orderLine.push(birthday);
+    orderLine.push(siteCustomerListID);
     orderLine.push(order.adjustedMerchandizeTotalGrossPrice.value);
     csvfileWriter.writeNext(orderLine);
 }
@@ -68,7 +88,7 @@ var createOrderHeadersCSV = function (parameters) {
         const queryString = 'creationDate > {0} AND status = {1} OR status = {2}';
         const orders = OrderMgr.searchOrders(queryString, null, orderFromDays, Order.ORDER_STATUS_OPEN, Order.ORDER_STATUS_NEW);
 
-        let workingFolder = createDirectory(File.IMPEX + '/' + parameters.WorkingFolder);
+        let workingFolder = createDirectory(File.IMPEX + File.SEPARATOR + parameters.WorkingFolder);
         let fileName = 'S3_Order_Headers.csv';
         let file = new File(workingFolder, fileName);
 
