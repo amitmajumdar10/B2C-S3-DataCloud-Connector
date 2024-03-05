@@ -120,6 +120,51 @@
                     }
                 ]
             }
+        },
+        {
+            "@type-id": "custom.ImportSegmentData",
+            "module": "plugin_s3_connector/cartridge/scripts/jobstep/importCustomerSegment.js",
+            "function": "ImportCustomerSegment",
+            "@supports-parallel-execution":"true",
+            "@supports-site-context": "true",
+            "@supports-organization-context":"false",
+            "transactional": "false",
+            "timeout-in-seconds": "1000",
+            "description": "Update the customer profiles with the segment information",
+            "parameters": {
+                "parameter": [
+                    {
+                        "@name": "SegmentName",
+                        "@type": "string",
+                        "@required": "true",
+                        "description": "Name of the Segment"
+                    },
+                    {
+                        "@name": "FilePath",
+                        "@type": "string",
+                        "@required": "true",
+                        "@trim": "true",
+                        "description": "Payload file path relative to IMPEX",
+                        "default-value": "src/customer/SegmentImportFormS3"
+                    }
+                ]
+            },
+            "status-codes": {
+                "status": [
+                    {
+                        "@code": "ERROR",
+                        "description": "Used when the step failed with an error."
+                    },
+                    {
+                        "@code": "OK",
+                        "description": "Used when the step finished successfully."
+                    },
+                    {
+                        "@code": "FINISHED_WITH_WARNINGS",
+                        "description": "Used when the step finished with warnings."
+                    }
+                ]
+            }
         }
       ]
     }
