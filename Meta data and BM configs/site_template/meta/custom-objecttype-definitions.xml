@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="s3_download_config">
+        <display-name xml:lang="x-default">S3 Download Configuration</display-name>
+        <description xml:lang="x-default">S3 Download Configuration</description>
+        <staging-mode>source-to-target</staging-mode>
+        <storage-scope>organization</storage-scope>
+        <key-definition attribute-id="bucketName">
+            <display-name xml:lang="x-default">Bucket Name</display-name>
+            <description xml:lang="x-default">S3 Bucket name</description>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="accessKey">
+                <display-name xml:lang="x-default">Access Key</display-name>
+                <description xml:lang="x-default">Secret Access Key to connect to the S3 bucket</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="contentType">
+                <display-name xml:lang="x-default">Content Type</display-name>
+                <description xml:lang="x-default">Enter the MIME type of the file like image/png, text/csv, text/plain, etc. Check the MIME types here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="localFilePath">
+                <display-name xml:lang="x-default">Local File Path</display-name>
+                <description xml:lang="x-default">The file path in the WebDAV folder, relative to the IMPEX folder. Example, '/src/order/S3_Order_Line_Items.csv'</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="region">
+                <display-name xml:lang="x-default">Region</display-name>
+                <description xml:lang="x-default">AWS region like 'us-east-1', 'us-east-2', 'us-west-1', etc.</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="remoteFileName">
+                <display-name xml:lang="x-default">Remote File Name</display-name>
+                <description xml:lang="x-default">The source file name, in the folder of the S3 bucket, including the folder path. Example, 'B2C-Commerce-Upload/S3_Order_Line_Items.csv'</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="remoteFolder">
+                <display-name xml:lang="x-default">Remote Folder</display-name>
+                <description xml:lang="x-default">Folder from the S3 bucket where the file is to be downloaded</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="secretAccessKey">
+                <display-name xml:lang="x-default">Secret Access Key</display-name>
+                <description xml:lang="x-default">Secret Access Key to connect to the S3 bucket</description>
+                <type>password</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="default">
+                <display-name xml:lang="x-default">default</display-name>
+                <attribute attribute-id="creationDate" system="true"/>
+                <attribute attribute-id="remoteFolder"/>
+                <attribute attribute-id="lastModified" system="true"/>
+                <attribute attribute-id="bucketName"/>
+                <attribute attribute-id="contentType"/>
+                <attribute attribute-id="localFilePath"/>
+                <attribute attribute-id="accessKey"/>
+                <attribute attribute-id="region"/>
+                <attribute attribute-id="secretAccessKey"/>
+                <attribute attribute-id="remoteFileName"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+
+    <custom-type type-id="s3_upload_config">
+        <display-name xml:lang="x-default">S3 Upload Configuration</display-name>
+        <description xml:lang="x-default">S3 Upload Configuration</description>
+        <staging-mode>source-to-target</staging-mode>
+        <storage-scope>organization</storage-scope>
+        <key-definition attribute-id="bucketName">
+            <display-name xml:lang="x-default">Bucket Name</display-name>
+            <description xml:lang="x-default">S3 Bucket name</description>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="accessKey">
+                <display-name xml:lang="x-default">Access Key</display-name>
+                <description xml:lang="x-default">Access Key to connect to the S3 bucket</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="contentType">
+                <display-name xml:lang="x-default">Content Type</display-name>
+                <description xml:lang="x-default">Enter the MIME type of the file like image/png, text/csv, text/plain, etc. Check the MIME types here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="localFilePath">
+                <display-name xml:lang="x-default">Local File Path</display-name>
+                <description xml:lang="x-default">File path in the WebDAV folder, relative to the IMPEX folder. Example, '/src/order/S3_Order_Line_Items.csv'</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="region">
+                <display-name xml:lang="x-default">Region</display-name>
+                <description xml:lang="x-default">AWS region like 'us-east-1', 'us-east-2', 'us-west-1', etc.</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="remoteFileName">
+                <display-name xml:lang="x-default">Remote File Name</display-name>
+                <description xml:lang="x-default">The destination file name in the folder of the S3 bucket, including the folder path. Example, 'B2C-Commerce-Upload/S3_Order_Line_Items.csv'</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="remoteFolder">
+                <display-name xml:lang="x-default">Remote Folder</display-name>
+                <description xml:lang="x-default">Folder from the S3 bucket where the file to be uploaded</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="secretAccessKey">
+                <display-name xml:lang="x-default">Secret Access Key</display-name>
+                <description xml:lang="x-default">Secret Access Key to connect to the S3 bucket</description>
+                <type>password</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="default">
+                <display-name xml:lang="x-default">default</display-name>
+                <attribute attribute-id="contentType"/>
+                <attribute attribute-id="region"/>
+                <attribute attribute-id="remoteFileName"/>
+                <attribute attribute-id="localFilePath"/>
+                <attribute attribute-id="bucketName"/>
+                <attribute attribute-id="lastModified" system="true"/>
+                <attribute attribute-id="remoteFolder"/>
+                <attribute attribute-id="secretAccessKey"/>
+                <attribute attribute-id="creationDate" system="true"/>
+                <attribute attribute-id="accessKey"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>

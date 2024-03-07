@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="S3 Download">
+        <description/>
+        <parameters/>
+        <flow>
+            <context site-id="Sites"/>
+            <step step-id="S3 download" type="custom.s3download" enforce-restart="false">
+                <description/>
+                <parameters>
+                    <parameter name="s3ConfigObject">datacloud-bucket</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <split sequential="false">
+            <contexts template-ref="template_32">
+                <context site-id="RefArch"/>
+            </contexts>
+            <flow-template template-id="template_32">
+                <step step-id="ImportSegmentData" type="custom.ImportSegmentData" enforce-restart="false">
+                    <description>ImportSegmentData</description>
+                    <parameters>
+                        <parameter name="SegmentName">High Spenders</parameter>
+                        <parameter name="FilePath">src/customer/high_spenders.csv</parameter>
+                    </parameters>
+                </step>
+            </flow-template>
+        </split>
+        <rules/>
+        <triggers>
+            <run-once enabled="false">
+                <date>2024-02-24Z</date>
+                <time>15:02:00.000Z</time>
+            </run-once>
+        </triggers>
+    </job>
+
+    <job job-id="S3 upload">
+        <description/>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch"/>
+            <step step-id="CreateOrderHeadersCSV" type="custom.CreateOrderHeadersCSV" enforce-restart="false">
+                <description/>
+                <parameters>
+                    <parameter name="orderFromDays">7</parameter>
+                    <parameter name="WorkingFolder">src/upload/OrderExportForS3</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <flow>
+            <context site-id="Sites"/>
+            <step step-id="custom.s3upload" type="custom.s3upload" enforce-restart="false">
+                <description/>
+                <parameters>
+                    <parameter name="s3ConfigObject">datacloud-bucket</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-once enabled="false">
+                <date>2024-02-22Z</date>
+                <time>16:16:00.000Z</time>
+            </run-once>
+        </triggers>
+    </job>
+</jobs>
