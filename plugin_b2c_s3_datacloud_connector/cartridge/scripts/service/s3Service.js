@@ -9,7 +9,7 @@ function getS3Service() {
     const LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
     const HTTPClient = require('dw/net/HTTPClient');
     const logger = require('dw/system/Logger').getLogger('s3tc', 'S3TransferClient');
-    return LocalServiceRegistry.createService('plugin_s3_connector.https.api', {
+    return LocalServiceRegistry.createService('plugin_b2c_s3_datacloud_connector.https.api', {
         execute: function (service, data) {
             try {
                 if (data.length === 0) {
