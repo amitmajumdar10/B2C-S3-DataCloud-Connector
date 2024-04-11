@@ -70,7 +70,7 @@ function writeOrderToCSV(csvfileWriter, order) {
         var customer = order.customer;
         var profile = customer.profile;
         if (profile) {
-            mobileNumber = profile.phoneMobile;
+            mobileNumber = profile.phoneHome;
             orderLine.push(profile.firstName);
             orderLine.push(profile.lastName);
             if (profile.birthday) {
@@ -78,7 +78,8 @@ function writeOrderToCSV(csvfileWriter, order) {
             }
             siteCustomerListID = CustomerMgr.siteCustomerList.ID;
         } else {
-            mobileNumber = order.custom.mobileNumber || '';
+            // mobileNumber = 'mobileNumber' in order.custom ? order.custom.mobileNumber : '';
+            mobileNumber = order.shipments[0].shippingAddress.phone || '';
             var name = order.customerName;
             var arrname = name.split(' ');
             var lName = arrname[arrname.length - 1];
@@ -88,7 +89,7 @@ function writeOrderToCSV(csvfileWriter, order) {
             orderLine.push(lName);
         }
     }
-    orderLine.push(CustomerMgr.getCustomerByLogin(mobileNumber) ? 'Registered' : 'Anonymous');
+    orderLine.push(CustomerMgr.getCustomerByLogin(order.customerEmail) ? 'Registered' : 'Anonymous');
     orderLine.push(order.customerEmail);
     orderLine.push(mobileNumber);
     orderLine.push(birthday);
