@@ -10,7 +10,23 @@ const CSVStreamWriter = require('dw/io/CSVStreamWriter');
 const CustomerMgr = require('dw/customer/CustomerMgr');
 const StringUtils = require('dw/util/StringUtils');
 const Calendar = require('dw/util/Calendar');
-const { createDirectory } = require('bc_job_components/cartridge/scripts/file/FileHelper');
+
+/**
+ * Create the given {directoryPath} recursively if it does not exists
+ *
+ * @param {string} directoryPath
+ *
+ * @returns {dw/io/File} The created directory instance
+ */
+var createDirectory = function (directoryPath) {
+    var directory = new File(directoryPath);
+
+    if (!directory.exists() && !directory.mkdirs()) {
+        throw new Error('Cannot create the directory ' + directoryPath);
+    }
+
+    return directory;
+};
 
 // eslint-disable-next-line require-jsdoc
 function datesFrom(days) {
